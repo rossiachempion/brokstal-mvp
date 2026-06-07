@@ -24,12 +24,20 @@
 <form class="response-card" method="post">
     <h2>Сопровождение обращения</h2>
 
-    <label>Статус
-        ...
+    <label>
+        Статус
+        <select name="status">
+            {% for value, label in status_labels.items() %}
+            <option value="{{ value }}" {{ 'selected' if appeal.status == value else '' }}>
+                {{ label }}
+            </option>
+            {% endfor %}
+        </select>
     </label>
 
-    <label>Проект ответа
-        ...
+    <label>
+        Проект ответа
+        <textarea name="answer" rows="8">{{ appeal.answer }}</textarea>
     </label>
 
     <button class="primary-button" type="submit">
@@ -37,11 +45,7 @@
     </button>
 </form>
 
-<form
-    action="{{ url_for('delete_appeal', appeal_id=appeal['id']) }}"
-    method="POST"
-    class="delete-form"
->
+<form action="{{ url_for('delete_appeal', appeal_id=appeal['id']) }}" method="POST">
     <button type="submit" class="secondary-button">
         Удалить обращение
     </button>
