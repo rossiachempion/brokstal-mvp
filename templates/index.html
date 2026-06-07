@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<header class="page-header">
+  <div>
+    <p class="eyebrow">Единый контур обработки обращений</p>
+    <h1>Мониторинг цифрового имиджа</h1>
+  </div>
+  <button class="primary-button" onclick="document.querySelector('#create-form').classList.toggle('open')">Добавить обращение</button>
+</header>
+
+<section class="stats-grid">
+  <article class="stat-card"><span>Всего событий</span><strong>{{ stats.total }}</strong></article>
+  <article class="stat-card"><span>Негативные</span><strong>{{ stats.negative }}</strong></article>
+  <article class="stat-card"><span>Требуют реакции</span><strong>{{ stats.in_work }}</strong></article>
+  <article class="stat-card"><span>Средняя оценка</span><strong>{{ stats.average_rating }}</strong></article>
+</section>
+
+<section id="create-form" class="create-panel">
+  <h2>Регистрация нового обращения</h2>
+  <form action="{{ url_for('create_appeal') }}" method="post" class="form-grid">
+    <label>Источник<select name="source"><option>Яндекс Карты</option><option>2ГИС</option><option>VK</option><option>Сайт</option></select></label>
+    <label>Автор<input name="author" value="Пользователь"></label>
+    <label>Оценка<select name="rating"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select></label>
+    <label>Тональность<select name="tone"><option value="negative">Негативное</option><option value="neutral" selected>Нейтральное</option><option value="positive">Позитивное</option></select></label>
+    <label>Категория<input name="category" value="Обращение"></label>
+    <label>Приоритет<select name="priority"><option value="low">Низкий</option><option value="medium" selected>Средний</option><option value="high">Высокий</option><option value="critical">Критический</option></select></label>
+    <label class="wide">Текст обращения<textarea name="text" rows="3" required></textarea></label>
+    <button class="primary-button wide" type="submit">Сохранить</button>
+  </form>
+</section>
+
+<section class="workbench">
+  <div class="filters">
+    <label>Источник<select id="source-filter"><option value="">Все</option><option>Яндекс Карты</option><option>2ГИС</option><option>VK</option><option>Сайт</option></select></label>
+    <label>Тональность<select id="tone-filter"><option value="">Все</option><option value="negative">Негативное</option><option value="neutral">Нейтральное</option><option value="positive">Позитивное</option></select></label>
+    <label>Статус<select id="status-filter"><option value="">Все</option><option value="new">Новое</option><option value="in_work">В работе</option><option value="answered">Ответ отправлен</option><option value="closed">Закрыто</option></select></label>
+  </div>
+
+  <div class="table-card">
+    <table class="appeals-table">
+      <thead>
+        <tr><th>Источник</th><th>Автор</th><th>Категория</th><th>Тональность</th><th>Приоритет</th><th>Статус</th><th>Действие</th></tr>
+      </thead>
+      <tbody>
+        {% for appeal in appeals %}
+        <tr data-source="{{ appeal.source }}" data-tone="{{ appeal.tone }}" data-status="{{ appeal.status }}">
+          <td><span class="source-badge">{{ appeal.source }}</span></td>
+          <td>{{ appeal.author }}<small>{{ appeal.created_at }}</small></td>
+          <td>{{ appeal.category }}</td>
+          <td><span class="tone tone-{{ appeal.tone }}">{{ tone_labels[appeal.tone] }}</span></td>
+          <td><span class="priority priority-{{ appeal.priority }}">{{ priority_labels[appeal.priority] }}</span></td>
+          <td>{{ status_labels[appeal.status] }}</td>
+          <td><a class="link-button" href="{{ url_for('appeal_detail', appeal_id=appeal.id) }}">Открыть</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

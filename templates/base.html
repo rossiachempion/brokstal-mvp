@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Броксталь · цифровой имидж</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">БС</div>
+      <div>
+        <strong>Броксталь</strong>
+        <span>Цифровой имидж</span>
+      </div>
+    </div>
+    <nav class="nav">
+      <a class="{{ 'active' if active == 'dashboard' else '' }}" href="{{ url_for('index') }}">Мониторинг</a>
+      <a class="{{ 'active' if active == 'analytics' else '' }}" href="{{ url_for('analytics') }}">Аналитика</a>
+    </nav>
+    <div class="sidebar-note">
+      MVP-сервис для централизованной фиксации отзывов и обращений.
+    </div>
+  </aside>
+
+  <main class="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

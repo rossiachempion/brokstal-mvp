@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<header class="page-header">
+  <div>
+    <p class="eyebrow">Сводная информация для руководства</p>
+    <h1>Аналитика обращений</h1>
+  </div>
+</header>
+
+<section class="stats-grid">
+  <article class="stat-card"><span>Всего событий</span><strong>{{ stats.total }}</strong></article>
+  <article class="stat-card"><span>Негативные</span><strong>{{ stats.negative }}</strong></article>
+  <article class="stat-card"><span>Требуют реакции</span><strong>{{ stats.in_work }}</strong></article>
+  <article class="stat-card"><span>Средняя оценка</span><strong>{{ stats.average_rating }}</strong></article>
+</section>
+
+<section class="analytics-grid">
+  <article class="chart-card">
+    <h2>Распределение по источникам</h2>
+    {% for source, value in by_source.items() %}
+      <div class="bar-row"><span>{{ source }}</span><div class="bar"><i style="width: {{ value / stats.total * 100 }}%"></i></div><b>{{ value }}</b></div>
+    {% endfor %}
+  </article>
+  <article class="chart-card">
+    <h2>Распределение по тональности</h2>
+    {% for tone, value in by_tone.items() %}
+      <div class="bar-row"><span>{{ tone_labels[tone] }}</span><div class="bar"><i style="width: {{ value / stats.total * 100 }}%"></i></div><b>{{ value }}</b></div>
+    {% endfor %}
+  </article>
+</section>
+{% endblock %}
