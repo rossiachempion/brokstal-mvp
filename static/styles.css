@@ -119,3 +119,18 @@ td small { display: block; color: var(--muted); margin-top: 4px; }
 .delete-button {
     width: 100%;
 }
+.delete-button {
+    width: 100%;
+    background: #c94b4b;
+    color: white;
+    border: none;
+    border-radius: 16px;
+    padding: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.delete-button:hover {
+    background: #b43f3f;
+}
