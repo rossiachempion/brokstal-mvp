@@ -110,3 +110,12 @@ td small { display: block; color: var(--muted); margin-top: 4px; }
   .sidebar { position: static; }
   .stats-grid, .filters, .form-grid, .detail-layout, .analytics-grid { grid-template-columns: 1fr; }
 }
+.response-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.delete-button {
+    width: 100%;
+}
